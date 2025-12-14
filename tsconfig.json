@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "ES2021",
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "strict": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "esModuleInterop": true, // allow default imports "import name from module"
+        "sourceMap": true, // debugging support 
+        "skipLibCheck": true, // avoid noise from library declaration files
+        "forceConsistentCasingInFileNames": true, // aws best practice
+    }, 
+    "include": ["src"], 
+    "exclude": ["node_modules", "dist", "tests"]
+}
