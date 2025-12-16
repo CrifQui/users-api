@@ -1,16 +1,24 @@
 {
     "compilerOptions": {
-        "target": "ES2021",
-        "module": "CommonJS",
-        "moduleResolution": "node",
-        "strict": true,
+        "target": "ES2022",
+        "module": "CommonJS", // Cambiado para mejor compatibilidad con Node.js
+        "moduleResolution": "node", // Cambiado de "bundler" a "node"
+        "lib": ["ES2022"],
         "outDir": "./dist",
         "rootDir": "./src",
-        "esModuleInterop": true, // allow default imports "import name from module"
-        "sourceMap": true, // debugging support 
-        "skipLibCheck": true, // avoid noise from library declaration files
-        "forceConsistentCasingInFileNames": true, // aws best practice
-    }, 
-    "include": ["src"], 
-    "exclude": ["node_modules", "dist", "tests"]
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "declaration": true, // Genera archivos .d.ts
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist", "tests"],
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    }
 }
