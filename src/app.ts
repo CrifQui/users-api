@@ -1,8 +1,8 @@
 import cors from "cors"; // libreria para manejar solicitudes entre diferentes dominios (cross-origin)
-import { errorMiddleware } from "./middlewares/error.middleware";
+import { errorMiddleware } from "./middlewares/error.middleware.js";
 import express from "express";
 import morgan from "morgan"; // libreria para registro de solicitudes http
-import routes from "./routes";
+import routes from "./routes.js";
 
 const app = express();
 

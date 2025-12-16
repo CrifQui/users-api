@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Api to admin users",
   "main": "app.ts",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
@@ -29,6 +30,5 @@
     "cors": "^2.8.5",
     "express": "^5.2.1",
     "morgan": "^1.10.1",
-    "pg": "^8.16.3"
   }
 }
