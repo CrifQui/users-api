@@ -8,10 +8,12 @@ const app = express();
 
 app.use(morgan("dev"));
 app.use(cors());
+app.use(express.json()); // importante sin esto el req.body siempre es undefined
 
 app.get("/health", (req, res) => {
     res.status(200).send({ status: "OK" });
 });
+
 app.use("/api", routes);
 
 // manejo de errores al final siempre best preactice
