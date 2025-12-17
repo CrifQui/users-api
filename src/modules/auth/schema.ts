@@ -25,4 +25,15 @@ export const registerSchema = z.object({
     password,
 });
 
+export const loginSchema = z.object({
+    email,
+    password,
+});
+
+export const refreshSchema = z.object({
+    refreshToken: z.string(),
+});
+
+export type LoginInput = z.infer<typeof loginSchema>;
+
 export type RegisterInput = z.infer<typeof registerSchema>;
