@@ -1,8 +1,11 @@
-import "dotenv/config";
-
 import { PrismaClient } from "../generated/client/client.js";
 import { PrismaPg } from "@prisma/adapter-pg";
+import dotenv from "dotenv";
 import pg from "pg";
+
+dotenv.config({
+    path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+});
 
 const connectionString = process.env.DATABASE_URL!;
 
@@ -29,4 +32,7 @@ if (process.env.NODE_ENV !== "production") {
 
 process.on("beforeExit", async () => {
     await prisma.$disconnect();
+    await pool.end();
 });
+
+export { pool };
