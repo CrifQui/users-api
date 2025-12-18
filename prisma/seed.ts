@@ -26,7 +26,8 @@ async function main() {
             update: {},
             create: {
                 email: "admin@example.com",
-                password: "123456",
+                password:
+                    "$2b$10$zoB3V.4zgXEjshRfePSnGOk5RcztRt8ymkEtBQusKjxbbpEmQSEQu",
                 name: "Admin User",
                 roleId: adminRole.id,
             },
