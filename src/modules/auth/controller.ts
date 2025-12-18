@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { loginUser, refreshAccessToken, registerUser } from "./service.js";
+import {
+    loginUser,
+    logoutUser,
+    refreshAccessToken,
+    registerUser,
+} from "./service.js";
 
 export const register = async (req: Request, res: Response) => {
     const data = req.body;
@@ -22,4 +27,11 @@ export const refresh = async (req: Request, res: Response) => {
     const { refreshToken } = req.body;
     const result = await refreshAccessToken(refreshToken);
     res.status(200).json(result);
+};
+
+export const logout = async (req: Request, res: Response) => {
+    const { refreshToken } = req.body;
+    console.log(refreshToken, req.body);
+    await logoutUser(refreshToken);
+    res.status(204).send();
 };

@@ -90,3 +90,13 @@ export const refreshAccessToken = async (token: string) => {
 
     return { accessToken };
 };
+
+export const logoutUser = async (refreshToken: string) => {
+    if (!refreshToken) return;
+    await prisma.refreshToken.updateMany({
+        where: { token: refreshToken, revoked: false },
+        data: {
+            revoked: true,
+        },
+    });
+};
