@@ -1,6 +1,9 @@
-import "dotenv/config";
-
+import dotenv from "dotenv";
 import { prisma } from "../src/config/prisma.js";
+
+dotenv.config({
+    path: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
+});
 
 const roles = ["ADMIN", "USER", "GUEST"] as const;
 
