@@ -5,6 +5,7 @@ import request from "supertest";
 describe("Auth refresh", () => {
     let refreshToken: string;
     beforeAll(async () => {
+        await prisma.refreshToken.deleteMany();
         const result = await request(app).post("/api/auth/login").send({
             email: "test@test.com",
             password: "P@ssword123",
