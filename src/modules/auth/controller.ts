@@ -31,7 +31,6 @@ export const refresh = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
     const { refreshToken } = req.body;
-    console.log(refreshToken, req.body);
     await logoutUser(refreshToken);
     res.status(204).send();
 };
