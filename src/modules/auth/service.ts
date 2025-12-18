@@ -5,6 +5,7 @@ import {
     verifyRefreshToken,
 } from "../../utils/jwt.js";
 
+import { AppError } from "../../utils/errorHandler.js";
 import bcrypt from "bcrypt";
 import { prisma } from "../../config/prisma.js";
 
@@ -12,12 +13,12 @@ export const registerUser = async (data: RegisterInput) => {
     const { email, password, name } = data;
 
     const user = await prisma.user.findUnique({ where: { email } });
-    if (user) throw new Error("User already exist");
+    if (user) throw new AppError("User already exist", 409);
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const userRole = await prisma.role.findUnique({ where: { name: "USER" } });
 
-    if (!userRole) throw new Error("User role not found");
+    if (!userRole) throw new AppError("User role not found", 403);
 
     const userCreated = await prisma.user.create({
         data: {
@@ -42,11 +43,11 @@ export const loginUser = async (data: LoginInput) => {
         include: { role: true },
     });
 
-    if (!user) throw new Error("Invalid credentials");
+    if (!user) throw new AppError("Invalid credentials", 401);
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
-    if (!passwordMatch) throw new Error("Invalid credentials");
+    if (!passwordMatch) throw new AppError("Invalid credentials", 401);
 
     const accessToken = getAccessToken({ sub: user.id, role: user.role.name });
     const refreshToken = getRefreshToken({ sub: user.id });
@@ -76,10 +77,10 @@ export const refreshAccessToken = async (token: string) => {
     });
 
     if (!storedToken || storedToken.revoked)
-        throw new Error("Invalid refresh token");
+        throw new AppError("Invalid refresh token", 401);
 
     if (storedToken.expiresAt < new Date())
-        throw new Error("Refresh token expired");
+        throw new AppError("Refresh token expired", 401);
 
     verifyRefreshToken(token);
 

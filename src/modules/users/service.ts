@@ -1,5 +1,6 @@
 import { CreateUserInput, UpdateUserInput } from "./users.schema.js";
 
+import { AppError } from "../../utils/errorHandler.js";
 import bcrypt from "bcrypt";
 import { prisma } from "../../config/prisma.js";
 
@@ -14,7 +15,7 @@ const getUser = async (id: string) => {
             createdAt: true,
         },
     });
-    if (!user) throw new Error("User not found");
+    if (!user) throw new AppError("User not found", 404);
     return user;
 };
 
@@ -28,14 +29,13 @@ const getUsers = async () => {
             createdAt: true,
         },
     });
-    if (!users) throw new Error("Users table is empty");
     return users;
 };
 
 const createUser = async (data: CreateUserInput) => {
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const user = await prisma.user.findUnique({ where: { email: data.email } });
-    if (user) throw new Error("User already exist");
+    if (user) throw new AppError("User already exist", 409);
     const newUser = await prisma.user.create({
         data: {
             email: data.email,
@@ -49,7 +49,7 @@ const createUser = async (data: CreateUserInput) => {
 
 const updateUser = async (id: string, data: UpdateUserInput) => {
     const user = await prisma.user.findUnique({ where: { id } });
-    if (!user) throw new Error("User not found");
+    if (!user) throw new AppError("User not found", 404);
     if (data.password) {
         data.password = await bcrypt.hash(data.password, 10);
     }
