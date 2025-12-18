@@ -12,6 +12,7 @@ describe("Auth fllow", () => {
         await prisma.user.deleteMany();
         await prisma.refreshToken.deleteMany();
     });
+
     it("should register a user", async () => {
         const result = await request(app)
             .post("/api/auth/register")
@@ -19,7 +20,8 @@ describe("Auth fllow", () => {
         expect(result.status).toBe(201);
         expect(result.body.user.email).toBe(userData.email);
     });
-    it("shoul login user", async () => {
+
+    it("should login user", async () => {
         const result = await request(app).post("/api/auth/login").send({
             email: userData.email,
             password: userData.password,
@@ -27,5 +29,16 @@ describe("Auth fllow", () => {
         expect(result.status).toBe(201);
         expect(result.body.accessToken).toBeDefined();
         expect(result.body.refreshToken).toBeDefined();
+    });
+
+    it("should not login user with invalid credentials", async () => {
+        const result = await request(app)
+            .post("/api/auth/login")
+            .send({
+                email: userData.email,
+                password: userData.password + 123,
+            });
+        expect(result.status).toBe(401);
+        expect(result.body.message).toBe("Invalid credentials");
     });
 });
