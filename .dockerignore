@@ -1,12 +1,26 @@
+# dependencias
 node_modules
-dist
-src/generated
-npm-debug.log
-.env.local
+
+# git
 .git
 .gitignore
-README.md
-.DS_Store
+
+# env
+.env
+.env.*
+!.env.example
+
+# logs
 *.log
+npm-debug.log
+
+# tooling
 .vscode
+.DS_Store
+
+# tests
 coverage
+tests
+
+# docs
+README.md
