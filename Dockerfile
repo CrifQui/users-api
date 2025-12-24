@@ -2,13 +2,19 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+RUN apk add --no-cache libc6-compat
+
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN npm ci
 
 COPY prisma ./prisma
 
-COPY . .
+COPY src ./src
+
+COPY tsconfig.json ./
+
+RUN npx prisma generate
 
 RUN npm run build
 
