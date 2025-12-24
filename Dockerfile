@@ -1,14 +1,12 @@
-FROM node:24-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-COPY prisma ./prisma/
+RUN npm ci --only=production
 
-RUN npm install
-
-RUN npx prisma generate
+COPY prisma ./prisma
 
 COPY . .
 
@@ -16,4 +14,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["node", "dist/server.js"]
