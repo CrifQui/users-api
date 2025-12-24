@@ -15,7 +15,7 @@
         "declaration": true, // Genera archivos .d.ts
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules", "dist", "tests",""],
+    "exclude": ["node_modules", "dist", "src/tests","**/*.test.ts"],
     "ts-node": {
         "compilerOptions": {
             "module": "ESNext"
