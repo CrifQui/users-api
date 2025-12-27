@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:24-alpine
 
 WORKDIR /app
 
@@ -10,11 +10,13 @@ RUN npm ci
 
 COPY prisma ./prisma
 
+COPY prisma.config.ts ./
+
 COPY src ./src
 
 COPY tsconfig.json ./
 
-RUN npx prisma generate
+RUN DATABASE_URL="postgresql://placeholder:5432" npx prisma generate
 
 RUN npm run build
 
