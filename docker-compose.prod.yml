@@ -10,6 +10,8 @@ services:
     depends_on:
       - db
     restart: always
+    volumes: 
+      - /etc/ssl/rds/global-bundle.pem:/etc/ssl/rds/global-bundle.pem:ro
 
   db:
     image: postgres:15
